@@ -50,11 +50,11 @@ ini_set('display_errors', 1);
 									s.LIBELLE_STAT_PROD AS statut_name,
 									d.NOM_DEVISE  AS devise_name,
 									I.FILE 
-								FROM PRODUIT p
-								JOIN CATEGORIE c ON p.ID_CATEGORIE = c.ID_CATEGORIE
-								JOIN STATUT_PRODUIT s ON p.ID_STATU_PRODUIT = s.ID_STATU_PRODUIT
-								JOIN DEVISE d ON p.ID_DEVISE = d.ID_DEVISE
-								JOIN IMAGE I ON p.ID_PRODUIT = I.ID_PRODUIT
+								FROM produit p
+								JOIN categorie c ON p.ID_CATEGORIE = c.ID_CATEGORIE
+								JOIN statut_produit s ON p.ID_STATU_PRODUIT = s.ID_STATU_PRODUIT
+								JOIN devise d ON p.ID_DEVISE = d.ID_DEVISE
+								JOIN image I ON p.ID_PRODUIT = I.ID_PRODUIT
 								ORDER BY p.ID_PRODUIT DESC
 							");
 							$statement->execute();
@@ -62,7 +62,7 @@ ini_set('display_errors', 1);
 
 							foreach ($result as $row) {
 								// Récupérer toutes les images associées à ce produit
-								$image_statement = $pdo->prepare("SELECT FILE_NAME FROM IMAGE WHERE ID_PRODUIT = ?");
+								$image_statement = $pdo->prepare("SELECT FILE_NAME FROM image WHERE ID_PRODUIT = ?");
 								$image_statement->execute([$row['ID_PRODUIT']]);
 								$images = $image_statement->fetchAll(PDO::FETCH_ASSOC);
 

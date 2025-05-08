@@ -10,7 +10,7 @@ date_default_timezone_set('America/Los_Angeles');
 $dbhost = 'localhost';
 
 // Database Name
-$dbname = "ecommerce";
+$dbname = "ecomerce";
 
 // Database Username
 $dbuser = 'root';

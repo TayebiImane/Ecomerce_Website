@@ -23,11 +23,11 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             s.LIBELLE_STAT_PROD AS statut_name,
             d.NOM_DEVISE AS devise_name,
             I.FILE 
-        FROM PRODUIT p
-        JOIN CATEGORIE c ON p.ID_CATEGORIE = c.ID_CATEGORIE
-        JOIN STATUT_PRODUIT s ON p.ID_STATU_PRODUIT = s.ID_STATU_PRODUIT
-        JOIN DEVISE d ON p.ID_DEVISE = d.ID_DEVISE
-        JOIN IMAGE I ON p.ID_PRODUIT = I.ID_PRODUIT
+        FROM produit p
+        JOIN categorie c ON p.ID_CATEGORIE = c.ID_CATEGORIE
+        JOIN statut_produit s ON p.ID_STATU_PRODUIT = s.ID_STATU_PRODUIT
+        JOIN devise d ON p.ID_DEVISE = d.ID_DEVISE
+        JOIN image I ON p.ID_PRODUIT = I.ID_PRODUIT
         WHERE p.ID_PRODUIT = :id
     ");
     $statement->execute([':id' => $product_id]);
@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	
 			// Préparer la requête pour mettre à jour tous les champs de l'image dans la table IMAGE
 			$update_image_stmt = $pdo->prepare("
-				UPDATE IMAGE 
+				UPDATE image 
 				SET 
 					FILE_NAME = :file_name,
 					FILE_PATH = :file_path,
@@ -93,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Mise à jour du produit dans la base de données
     $update_statement = $pdo->prepare("
-        UPDATE PRODUIT 
+        UPDATE produit
         SET 
             NOM_PRODUIT = :name,
             DESCRIPTION_PRODUIT = :description,
@@ -184,7 +184,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <select name="category_id" id="category_id" class="form-control">
                                 <?php
                                 // Afficher les catégories disponibles
-                                $category_statement = $pdo->prepare("SELECT * FROM CATEGORIE");
+                                $category_statement = $pdo->prepare("SELECT * FROM categorie");
                                 $category_statement->execute();
                                 $categories = $category_statement->fetchAll(PDO::FETCH_ASSOC);
                                 foreach ($categories as $category) {
@@ -201,7 +201,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <select name="status_id" id="status_id" class="form-control">
                                 <?php
                                 // Afficher les statuts disponibles
-                                $status_statement = $pdo->prepare("SELECT * FROM STATUT_PRODUIT");
+                                $status_statement = $pdo->prepare("SELECT * FROM statut_produit");
                                 $status_statement->execute();
                                 $statuses = $status_statement->fetchAll(PDO::FETCH_ASSOC);
                                 foreach ($statuses as $status) {
@@ -218,7 +218,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <select name="currency_id" id="currency_id" class="form-control">
                                 <?php
                                 // Afficher les devises disponibles
-                                $currency_statement = $pdo->prepare("SELECT * FROM DEVISE");
+                                $currency_statement = $pdo->prepare("SELECT * FROM devise");
                                 $currency_statement->execute();
                                 $currencies = $currency_statement->fetchAll(PDO::FETCH_ASSOC);
                                 foreach ($currencies as $currency) {

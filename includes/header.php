@@ -10,13 +10,13 @@
     <header>
         <nav>
             <ul>
-                <li><a href="/Ecomerce_Website-main/pages/index.php">Accueil</a></li>
-                <li><a href="/Ecomerce_Website-main/pages/products.php">Produits</a></li>
-                <li><a href="/Ecomerce_Website-main/pages/cart.php">Panier</a></li>
-                <li><a href="/Ecomerce_Website-main/pages/orders.php">Commandes</a></li>
-                <li><a href="/Ecomerce_Website-main/pages/promotions.php">Promotions</a></li>
-                <li><a href="/Ecomerce_Website-main/pages/login.php">Se connecter</a></li>
-                <li><a href="/Ecomerce_Website-main/pages/register.php">S'inscrire</a></li>
+                <li><a href="/Ecomerce//index.php">Accueil</a></li>
+                <li><a href="/Ecomerce/pages/products.php">Produits</a></li>
+                <li><a href="/Ecomerce/pages/cart.php">Panier</a></li>
+                <li><a href="/Ecomerce/pages/orders.php">Commandes</a></li>
+                <li><a href="/Ecomerce/pages/promotions.php">Promotions</a></li>
+                <li><a href="/Ecomerce/pages/login.php">Se connecter</a></li>
+                <li><a href="/Ecomerce/pages/register.php">S'inscrire</a></li>
             </ul>
         </nav>
     </header>

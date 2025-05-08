@@ -75,13 +75,21 @@ if (isset($_POST['form1'])) {
 
     if ($valid == 1) {
         // 1. Récupérer l'ID auto-incrémenté du produit
-        $statement = $pdo->prepare("SHOW TABLE STATUS LIKE 'PRODUIT'");
+        $statement = $pdo->prepare("SHOW TABLE STATUS LIKE 'produit'");
         $statement->execute();
         $result = $statement->fetch();
-        $ai_id = $result['Auto_increment'];
+        
+        if ($result !== false) {
+            $ai_id = $result['Auto_increment'];
+            // Vous pouvez maintenant utiliser $ai_id en toute sécurité
+        } else {
+            // Gérer l'erreur si la table 'PRODUIT' n'est pas trouvée ou si la requête échoue
+            echo "La table 'PRODUIT' n'a pas été trouvée ou la requête a échoué.";
+        }
+        
     
         // 2. Insérer le produit dans la table PRODUIT
-        $statement = $pdo->prepare("INSERT INTO PRODUIT (
+        $statement = $pdo->prepare("INSERT INTO produit (
             ID_CATEGORIE,
             NOM_PRODUIT,
             DESCRIPTION_PRODUIT,
@@ -92,6 +100,7 @@ if (isset($_POST['form1'])) {
             SEUIL_ALERTE,
             ID_STATU_PRODUIT,
             ID_DEVISE
+         
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     
         $statement->execute([
@@ -117,7 +126,7 @@ if (isset($_POST['form1'])) {
         $file_binary = file_get_contents($destination);
     
         // 4. Insérer l'image dans la table IMAGE
-        $statement = $pdo->prepare("INSERT INTO IMAGE (ID_PRODUIT, TYPE, FILE_NAME, FILE_PATH, FILE) VALUES (?, ?, ?, ?, ?)");
+        $statement = $pdo->prepare("INSERT INTO image (ID_PRODUIT, TYPE, FILE_NAME, FILE_PATH, FILE) VALUES (?, ?, ?, ?, ?)");
         $statement->execute([
             $ai_id,  // L'ID du produit que nous venons d'insérer
             $ext,
@@ -164,7 +173,7 @@ if (isset($_POST['form1'])) {
                                 <select name="tcat_id" class="form-control">
                                     <option value="">Choisir une catégorie</option>
                                     <?php
-                                    $statement = $pdo->prepare("SELECT * FROM CATEGORIE ORDER BY NOM_CATEGORIE ASC");
+                                    $statement = $pdo->prepare("SELECT * FROM categorie ORDER BY NOM_CATEGORIE ASC");
                                     $statement->execute();
                                     $categories = $statement->fetchAll(PDO::FETCH_ASSOC);
                                     foreach ($categories as $cat) {
@@ -218,7 +227,7 @@ if (isset($_POST['form1'])) {
                                 <select name="statu_produit" class="form-control">
                                     <option value="">Choisir le statut</option>
                                     <?php
-                                    $statement = $pdo->prepare("SELECT * FROM STATUT_PRODUIT ORDER BY LIBELLE_STAT_PROD ASC");
+                                    $statement = $pdo->prepare("SELECT * FROM statut_produit ORDER BY LIBELLE_STAT_PROD ASC");
                                     $statement->execute();
                                     $statuts = $statement->fetchAll(PDO::FETCH_ASSOC);
                                     foreach ($statuts as $statu) {
@@ -236,7 +245,7 @@ if (isset($_POST['form1'])) {
                                 <select name="devise" class="form-control">
                                     <option value="">Choisir une devise</option>
                                     <?php
-                                    $statement = $pdo->prepare("SELECT * FROM DEVISE ORDER BY NOM_DEVISE ASC");
+                                    $statement = $pdo->prepare("SELECT * FROM devise ORDER BY NOM_DEVISE ASC");
                                     $statement->execute();
                                     $devises = $statement->fetchAll(PDO::FETCH_ASSOC);
                                     foreach ($devises as $devise) {
